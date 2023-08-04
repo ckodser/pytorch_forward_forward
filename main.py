@@ -119,11 +119,23 @@ if __name__ == "__main__":
     for data, name in zip([x, x_pos, x_neg], ['orig', 'pos', 'neg']):
         visualize_sample(data, name)
 
-    net.train(x_pos, x_neg)
+    # net.train(x_pos, x_neg)
 
-    print('train error:', 1.0 - net.predict(x).eq(y).float().mean().item())
+    prediction = []
+    batch_size = 128
+    for i in range(x.shape[0] // batch_size):
+        prediction.append(net.predict(x)[i * batch_size:(i + 1) * batch_size])
+    prediction = torch.cat(prediction, dim=0)
+
+    print('train error:', 1.0 - prediction.eq(y).float().mean().item())
 
     x_te, y_te = next(iter(test_loader))
     x_te, y_te = x_te.cuda(), y_te.cuda()
 
-    print('test error:', 1.0 - net.predict(x_te).eq(y_te).float().mean().item())
+    prediction = []
+    batch_size = 128
+    for i in range(x_te.shape[0] // batch_size):
+        prediction.append(net.predict(x_te)[i * batch_size:(i + 1) * batch_size])
+    prediction = torch.cat(prediction, dim=0)
+
+    print('test error:', 1.0 - prediction.eq(y_te).float().mean().item())
