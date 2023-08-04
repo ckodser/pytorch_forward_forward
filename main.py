@@ -119,7 +119,7 @@ if __name__ == "__main__":
     for data, name in zip([x, x_pos, x_neg], ['orig', 'pos', 'neg']):
         visualize_sample(data, name)
 
-    # net.train(x_pos, x_neg)
+    net.train(x_pos, x_neg)
     batch_size = 32
 
     prediction = []
