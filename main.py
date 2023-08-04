@@ -123,7 +123,7 @@ if __name__ == "__main__":
     batch_size = 32
 
     prediction = []
-    for i in range(x.shape[0] // batch_size):
+    for i in range(x.shape[0] // batch_size +1):
         prediction.append(net.predict(x[i * batch_size:(i + 1) * batch_size]))
     prediction = torch.cat(prediction, dim=0)
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     x_te, y_te = x_te.cuda(), y_te.cuda()
 
     prediction = []
-    for i in range(x_te.shape[0] // batch_size):
+    for i in range(x_te.shape[0] // batch_size +1):
         prediction.append(net.predict(x_te[i * batch_size:(i + 1) * batch_size]))
     prediction = torch.cat(prediction, dim=0)
 
