@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     prediction = []
     for i in range(x.shape[0] // batch_size):
-        prediction.append(net.predict(x)[i * batch_size:(i + 1) * batch_size])
+        prediction.append(net.predict(x[i * batch_size:(i + 1) * batch_size]))
     prediction = torch.cat(prediction, dim=0)
 
     print('train error:', 1.0 - prediction.eq(y).float().mean().item())
@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
     prediction = []
     for i in range(x_te.shape[0] // batch_size):
-        prediction.append(net.predict(x_te)[i * batch_size:(i + 1) * batch_size])
+        prediction.append(net.predict(x_te[i * batch_size:(i + 1) * batch_size]))
     prediction = torch.cat(prediction, dim=0)
 
     print('test error:', 1.0 - prediction.eq(y_te).float().mean().item())
